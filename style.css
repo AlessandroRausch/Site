@@ -1,0 +1,30 @@
+*{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+
+#sobre{
+    font-weight: 100;
+}
+
+option{
+    color: red;
+}
+
+select + label{
+    font-weight: bold;
+}
+
+h2 ~ p {
+    color: brown;
+}
+a  header{
+  color: red;
+}
+
+
+
+h2 {
+    font-style: italic;
+
+}
