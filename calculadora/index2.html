@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utilizando Js</title>
+    <link rel="stylesheet" href="style2.css">
+    <script src="script.js"></script>
+</head>
+<body>
+   <h1 id="titulo">Calculadora de Desconto</h1>
+    <div>
+        <label for="preco">Preço do produto:</label>
+        <input type="number" id="preco" name="preco" placeholder="1,2,3...">
+    </div>
+    <div>
+        <label for="desconto">Percentual de desconto:</label>
+        <input type="number" id="desconto" name="desconto" placeholder="1,2,3...">
+    </div>
+    <button onclick="calcularDesconto()">Calcular Desconto</button>
+    <p id="resultado"></p>
+
+
+    <section>
+    <h1>Calculadora de Operadores</h1>
+    <p>Operadores  Validos: +, -, *, /</p>
+    <input type="number" id="num1" placeholder="Número 1">
+    <input type="number" id="num2" placeholder="Número 2">
+    <input type="text" id="operador" placeholder="Operador">
+    <button onclick="efetuarOperacao()">Calcular</button>
+        <p id="resultado1"></p>
+
+</section>
+
+<section>
+    <script src="script.js"></script>
+    <h1>Impresora</h1>
+    <label for="quantas">Digite quantas palavras você quer imprimir:</label>
+    <input type="number" id="quantas" placeholder="1,2,3...">
+    <label for="quantidade">Digite a quantidade de Letras</label>
+    <input type="number" id="quantidade" placeholder="1,2,3...">
+    <button onclick="imprimir()">Imprimir</button>
+    <p id="impressao"></p>
+
+</section>
+
+
+
+</body>
+</html>
