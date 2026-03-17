@@ -1,7 +1,6 @@
-let display = document.getElementById('display');
 
-
-
+const display = document.getElementById('display');
+let calculando = document.getElementById('calculando');
 
 function appendtbackspace() {
     
@@ -9,6 +8,7 @@ function appendtbackspace() {
 }
 
 function appendToDisplay(value) {
+   
     display.value += value;
 }
 
@@ -19,9 +19,14 @@ function clearDisplay() {
 function calculate() {
     try {
         calculado = true;
-        display.value = eval(display.value);
+        display.value = parseFloat(calculando.textContent);
+        result = eval(variavel);
+        display.value = result;
+        variavel = result;
+        calculando.textContent = "";
     } catch (error) {
-        display.value = 'Error';
+        display.value = 'Deu erro. ';
+        console.error('Erro ao calcular:', error);
     }
 }
 

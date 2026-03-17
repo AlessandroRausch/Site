@@ -12,23 +12,74 @@
     <!--Create a    -->
 
     <div class="calculator">
+        <p id="calculando"></p>
         <input type="text" id="display" readonly>
         
         <!--Create a script to handle keyboard input for the calculator-->
         <script>
+
+            
          let calculado = false;
+        var variavel = "";
+
 
            window.addEventListener('keydown', function (event) {
-              
+
+
+
                 const display = document.getElementById('display');
                 
                 if (!isNaN(event.key) || event.key === '.' || ['+', '-', '*', '/'].includes(event.key) || calculate===false) {
                     
+                    if (calculado) {
+                        calculando.textContent = display.value;
+                        display.value = '';
+                        variavel = "";
+                        calculado = false;
+                    }
+
+
+
+                    variavel += event.key;
+                    console.log(variavel);
                     appendToDisplay(event.key);
-                } else if (event.key === 'Enter') {
+
+                }switch (event.key) {
+
+                    case 'Enter':
                     calculate();
-                    console.log(calculado);
+                    break;
+
+                    case 'Backspace':
+                    appendtbackspace();
+                    variavel = variavel.slice(0, -1);
+                    break;
+
+                    case 'c'||'C':
+                    variavel = "";
+                    clearDisplay();
+                    break;
+
+                    case '+':
+                        console.log(variavel);
+                        document.getElementById('calculando').textContent = variavel;
+                        clearDisplay();
+
+                    break;
+                    case '-':
+
+                    break;
+                    case '*':
+
+
+                    break;
+                    case '/':
+                    
+
+                    break;
                 }
+
+
             });
         </script>
 
