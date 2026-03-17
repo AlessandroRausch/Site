@@ -14,69 +14,78 @@
     <div class="calculator">
         <p id="calculando"></p>
         <input type="text" id="display" readonly>
-        
+
         <!--Create a script to handle keyboard input for the calculator-->
         <script>
+           
 
-            
-         let calculado = false;
-        var variavel = "";
+            let calculado = false;
+            var variavel = "";
+            var operador = [];
+            var conta = [];
 
 
-           window.addEventListener('keydown', function (event) {
 
+
+            window.addEventListener('keydown', function (event) {
 
 
                 const display = document.getElementById('display');
-                
-                if (!isNaN(event.key) || event.key === '.' || ['+', '-', '*', '/'].includes(event.key) || calculate===false) {
-                    
+
+                if (!isNaN(event.key) || event.key === '.' || ['+', '-', '*', '/','='].includes(event.key) || calculate === false) {
+
                     if (calculado) {
                         calculando.textContent = display.value;
-                        display.value = '';
-                        variavel = "";
-                        calculado = false;
+                    }
+
+                    if (['+', '-', '*', '/'].includes(event.key)) {
+                        operador.push(event.key);
+                            
+
                     }
 
 
-
                     variavel += event.key;
-                    console.log(variavel);
                     appendToDisplay(event.key);
-
-                }switch (event.key) {
+                } switch (event.key) {
 
                     case 'Enter':
-                    calculate();
-                    break;
+
+                        calculate();
+                        operador = [];
+                        break;
 
                     case 'Backspace':
-                    appendtbackspace();
-                    variavel = variavel.slice(0, -1);
-                    break;
+                        appendtbackspace();
+                        variavel = variavel.slice(0, -1);
+                        break;
 
-                    case 'c'||'C':
-                    variavel = "";
-                    clearDisplay();
-                    break;
+                    case 'c' || 'C':
+                        variavel = "";
+                        clearDisplay();
+                        break;
 
                     case '+':
-                        console.log(variavel);
-                        document.getElementById('calculando').textContent = variavel;
-                        clearDisplay();
+                        plus(variavel);
 
-                    break;
+                        break;
                     case '-':
 
-                    break;
+                        break;
                     case '*':
 
 
-                    break;
+                        break;
                     case '/':
+
+
+                        break;
+                        case '=':
+                    
                     
 
-                    break;
+                            break;
+                            calculado = false;
                 }
 
 
