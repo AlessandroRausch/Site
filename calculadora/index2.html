@@ -17,14 +17,12 @@
 
         <!--Create a script to handle keyboard input for the calculator-->
         <script>
-           
-
-            let calculado = false;
+           let calculado = false;
             var variavel = "";
             var operador = [];
             var conta = [];
 
-
+            
 
 
             window.addEventListener('keydown', function (event) {
@@ -35,24 +33,27 @@
                 if (!isNaN(event.key) || event.key === '.' || ['+', '-', '*', '/','='].includes(event.key) || calculate === false) {
 
                     if (calculado) {
-                        calculando.textContent = display.value;
+                        calculando.textContent = variavel;
+                        clearDisplay();
+                        calculado = false;
                     }
 
                     if (['+', '-', '*', '/'].includes(event.key)) {
                         operador.push(event.key);
-                            
-
+                        
                     }
+                        console.log(variavel);
+                        console.log(operador);
+                        console.log(conta);
+                        variavel += event.key;
+                        appendToDisplay(event.key);
 
-
-                    variavel += event.key;
-                    appendToDisplay(event.key);
+                                        
                 } switch (event.key) {
 
                     case 'Enter':
-
                         calculate();
-                        operador = [];
+                        clearDisplay();
                         break;
 
                     case 'Backspace':
@@ -61,13 +62,13 @@
                         break;
 
                     case 'c' || 'C':
-                        variavel = "";
+                        clear();
                         clearDisplay();
                         break;
 
                     case '+':
                         plus(variavel);
-
+                        clearDisplay();
                         break;
                     case '-':
 
@@ -81,13 +82,12 @@
 
                         break;
                         case '=':
-                    
-                    
-
-                            break;
-                            calculado = false;
+                            calculate();
+                
+                        break;
+                    calculado = false;
                 }
-
+                
 
             });
         </script>
