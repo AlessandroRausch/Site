@@ -27,7 +27,6 @@ function calculate() {
             display.value = result;
             calculando.textContent = expressao;
             resultado = result;
-            displayValue = "";
             acabouDeCalcular = true;
             console.log('Resultado:', result);
         }
