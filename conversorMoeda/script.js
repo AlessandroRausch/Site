@@ -11,13 +11,20 @@ const API_KEY = 'https://api.exchangerate-api.com/v4/latest/';
 const API_KEY_COINS = 'https://economia.awesomeapi.com.br/xml/available/uniq';
 
 
-function setSelectOptions(selectElement, codes) {
+function setSelectOptions(selectElement, options) {
   selectElement.innerHTML = '';
-  codes.forEach((code) => {
-    const option = document.createElement('option');
-    option.value = code;
-    option.textContent = code;
-    selectElement.appendChild(option);
+  options.forEach((option) => {
+    const optionElement = document.createElement('option');
+    // Se for um objeto com value e label
+    if (typeof option === 'object') {
+      optionElement.value = option.value;
+      optionElement.textContent = option.label;
+    } else {
+      // Se for uma string simples (compatibilidade)
+      optionElement.value = option;
+      optionElement.textContent = option;
+    }
+    selectElement.appendChild(optionElement);
   });
 }
 
@@ -49,27 +56,48 @@ async function connvertMoney() {
 
 async function addCoins() {
     try {
-
+        // Buscar dados do XML da API brasileira
         const responseCoins = await fetch(API_KEY_COINS);
         const dataCoins = await responseCoins.text();
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(dataCoins, "application/xml");
-        const currencyCoins  = Array.from(xmlDoc.getElementsByTagName("currency")).map(node => node.textContent);
-        const response = await fetch(API_KEY+"USD");
+        
+        // Criar mapa de sigla -> nome completo a partir do XML
+        const currencyMap = {};
+        Array.from(xmlDoc.getElementsByTagName("*")).forEach(node => {
+            // A estrutura é <SIGLA>Nome da Moeda</SIGLA>
+            const sigla = node.tagName.toUpperCase();
+            const nome = node.textContent.trim();
+            if (sigla && nome && sigla !== 'CURRENCIES') { // Evitar a tag raiz
+                currencyMap[sigla] = nome;
+            }
+        });
+        
+        // Buscar moedas do JSON
+        const response = await fetch(API_KEY + "USD");
         const data = await response.json();
         const currencyCodes = Object.keys(data.rates).sort();
-        setSelectOptions(fromCurrency, currencyCodes.concat(currencyCoins));
-        setSelectOptions(toCurrency, currencyCodes.concat(currencyCoins));
+        
+        // Criar arrays de opções com sigla + nome (apenas moedas que têm nome no XML)
+        const optionsWithNames = currencyCodes
+            .filter(code => currencyMap[code]) // Manter apenas moedas que têm nome no XML
+            .map(code => ({
+                value: code,
+                label: `${code} - ${currencyMap[code]}`
+            }));
+        
+        setSelectOptions(fromCurrency, optionsWithNames);
+        setSelectOptions(toCurrency, optionsWithNames);
 
-    // Ajuste inicial: deixar BRL e USD selecionados se existirem
-     if (currencyCodes.includes('BRL')) fromCurrency.value = 'BRL';
+        // Ajuste inicial: deixar BRL e USD selecionados se existirem
+        if (currencyCodes.includes('BRL')) fromCurrency.value = 'BRL';
         if (currencyCodes.includes('USD')) toCurrency.value = 'USD';
 
     } catch (error) {
         console.error('Erro ao buscar a cotação:', error);
         throw error;
     }
-  }
+}
 
 addCoins();
 
