@@ -28,7 +28,7 @@ function setSelectOptions(selectElement, options) {
   });
 }
 
-
+//Convertendo a moeda e seu valor e imprimindo o resultado na tela, caso haja algum erro, ele irá mostrar uma mensagem de erro para o usuário.
 async function connvertMoney() {
     button.style.display = 'none';
     loading.style.display = 'block';
@@ -98,9 +98,10 @@ async function addCoins() {
         throw error;
     }
 }
-
+// Chamar a função para adicionar as moedas ao carregar a página
 addCoins();
 
+//Event listener para o formulário, para quando o usuário clicar no botão de converter, ele chamar a função de conversão e evitar que a página seja recarregada.
 form.addEventListener('submit', function(event) {
     event.preventDefault();
     connvertMoney();
